@@ -1,0 +1,79 @@
+
+<!doctype html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://i.imgur.com/aKp9leP.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Hill - Heizöl deutschlandweit - Günstig bestellen ab 70 Cent/L</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Hill - Heizöl deutschlandweit günstig bestellen. Kostenlose Lieferung ab 500L. Premium Qualität ab 70 Cent pro Liter. Schnelle Lieferung in 2-3 Werktagen." />
+    <meta name="keywords" content="Hill, Heizöl, Bayern, günstig, bestellen, Lieferung, kostenlos, Premium, Qualität" />
+    <meta name="author" content="HILL-Clear Projects GmbH" />
+    
+    <!-- Mobile Optimizations -->
+    <meta name="theme-color" content="#006b51" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Hill - Heizöl" />
+    <meta name="format-detection" content="telephone=yes" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="https://i.imgur.com/aKp9leP.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="https://i.imgur.com/aKp9leP.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/aKp9leP.png" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Prevent FOUC -->
+    <style>
+      body { visibility: hidden; opacity: 0; }
+      .loading { visibility: visible; opacity: 1; }
+    </style>
+  </head>
+  <body class="loading">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      // Remove loading class when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.remove('loading');
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+      });
+      
+      // Clean up old service workers first
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      
+      // Register Service Worker only in production
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+      
+      // Prevent any install prompts
+      window.addEventListener('beforeinstallprompt', (e) => e.preventDefault());
+    </script>
+  </body>
+</html>
