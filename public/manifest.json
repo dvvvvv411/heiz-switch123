@@ -1,8 +1,8 @@
 
 {
-  "name": "Hill - Heizöl für Bayern",
-  "short_name": "Hill Heizöl",
-  "description": "Hill - Heizöl für Bayern günstig bestellen - Kostenlose Lieferung ab 500L",
+  "name": "Heizöl günstig bestellen",
+  "short_name": "Heizöl",
+  "description": "Heizöl deutschlandweit günstig bestellen - Kostenlose Lieferung ab 500L",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -13,13 +13,13 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "https://i.imgur.com/aKp9leP.png",
+      "src": "/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "https://i.imgur.com/aKp9leP.png",
+      "src": "/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
@@ -33,7 +33,7 @@
       "url": "/#price-calculator",
       "icons": [
         {
-          "src": "https://i.imgur.com/aKp9leP.png",
+          "src": "/favicon.svg",
           "sizes": "32x32"
         }
       ]
