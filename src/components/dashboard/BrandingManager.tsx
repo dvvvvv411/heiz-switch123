@@ -87,7 +87,18 @@ export function BrandingManager() {
   const handleDelete = async () => {
     if (!selectedBranding) return;
 
+    // Optimistic update
+    setBrandings((prev) => prev.filter((b) => b.id !== selectedBranding.id));
+
     try {
+      // Delete logo from storage if it's a Supabase storage URL
+      if (selectedBranding.logo_url.includes('branding-logos')) {
+        const fileName = selectedBranding.logo_url.split('/').pop();
+        if (fileName) {
+          await supabase.storage.from('branding-logos').remove([fileName]);
+        }
+      }
+
       const { error } = await supabase
         .from('brandings')
         .delete()
@@ -100,7 +111,6 @@ export function BrandingManager() {
         description: 'Das Branding wurde erfolgreich gelöscht.',
       });
 
-      await fetchBrandings();
       await refreshBranding();
     } catch (error: any) {
       toast({
@@ -108,6 +118,8 @@ export function BrandingManager() {
         title: 'Fehler beim Löschen',
         description: error.message,
       });
+      // Rollback on error
+      await fetchBrandings();
     } finally {
       setDeleteDialogOpen(false);
       setSelectedBranding(null);
@@ -122,6 +134,14 @@ export function BrandingManager() {
   const handleActivate = async () => {
     if (!selectedBranding) return;
 
+    // Optimistic update
+    setBrandings((prev) =>
+      prev.map((b) => ({
+        ...b,
+        is_active: b.id === selectedBranding.id,
+      }))
+    );
+
     try {
       const { error } = await supabase
         .from('brandings')
@@ -135,14 +155,15 @@ export function BrandingManager() {
         description: 'Das Branding wurde erfolgreich aktiviert.',
       });
 
-      await fetchBrandings();
-      await refreshBranding();
+      // refreshBranding is handled by realtime subscription in BrandingContext
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Fehler beim Aktivieren',
         description: error.message,
       });
+      // Rollback on error
+      await fetchBrandings();
     } finally {
       setActivateDialogOpen(false);
       setSelectedBranding(null);

@@ -89,6 +89,39 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetchActiveBranding();
+
+    // Subscribe to realtime changes on brandings table
+    const channel = supabase
+      .channel('branding-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'brandings',
+        },
+        (payload) => {
+          console.log('Branding change detected:', payload);
+          
+          // If a branding was activated
+          if (payload.eventType === 'UPDATE' && payload.new && (payload.new as any).is_active) {
+            setBranding(mapBrandingRow(payload.new as BrandingRow));
+          }
+          // If a branding was inserted and is active
+          else if (payload.eventType === 'INSERT' && payload.new && (payload.new as any).is_active) {
+            setBranding(mapBrandingRow(payload.new as BrandingRow));
+          }
+          // If the active branding was deleted, fetch again
+          else if (payload.eventType === 'DELETE' && payload.old && (payload.old as any).is_active) {
+            fetchActiveBranding();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return (

@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import { LogoUpload } from './LogoUpload';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +26,7 @@ import { Loader2 } from 'lucide-react';
 
 const brandingFormSchema = z.object({
   name: z.string().min(1, 'Name ist erforderlich').max(100),
-  logo_url: z.string().url('Ungültige URL').max(500),
+  logo_url: z.string().min(1, 'Logo ist erforderlich').max(500),
   company_name: z.string().min(1, 'Firmenname ist erforderlich').max(200),
   company_short_name: z.string().min(1, 'Kurzname ist erforderlich').max(50),
   address_street: z.string().min(1, 'Straße ist erforderlich').max(200),
@@ -162,9 +163,15 @@ export function BrandingForm({ open, onOpenChange, onSuccess, initialData }: Bra
               name="logo_url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Logo URL</FormLabel>
+                  <FormLabel>Logo</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." {...field} />
+                    <LogoUpload
+                      currentLogoUrl={field.value}
+                      onUploadComplete={(url) => {
+                        field.onChange(url);
+                      }}
+                      onUrlChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
