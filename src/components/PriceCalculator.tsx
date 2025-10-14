@@ -7,19 +7,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Truck, Shield, Clock, Calculator } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useBranding } from '@/contexts/BrandingContext';
 
 const PriceCalculator = () => {
   const [liters, setLiters] = useState<string>('1500');
   const [oilType, setOilType] = useState<'standard_heizoel' | 'premium_heizoel'>('standard_heizoel');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { branding } = useBranding();
 
   const prices = {
     standard_heizoel: 0.70,
     premium_heizoel: 0.73
   };
 
-  const shopId = "46f10e96-ab3a-4f6d-a31d-0414685fb7c1";
+  const shopId = branding?.shopId || "46f10e96-ab3a-4f6d-a31d-0414685fb7c1";
   const currentPrice = prices[oilType];
   const litersNum = parseInt(liters) || 0;
   const canCalculate = liters !== '' && litersNum >= 1500 && litersNum <= 32000;
@@ -74,7 +76,8 @@ const PriceCalculator = () => {
         
         if (data.token) {
           // Redirect to checkout with token
-          const checkoutUrl = `https://checkout.knobloch-heizoel.de/checkout?token=${data.token}`;
+          const checkoutDomain = branding?.checkoutDomain || 'hill-heizoel.de';
+          const checkoutUrl = `https://checkout.${checkoutDomain}/checkout?token=${data.token}`;
           console.log('Redirecting to:', checkoutUrl);
           window.location.assign(checkoutUrl);
           
@@ -92,9 +95,10 @@ const PriceCalculator = () => {
       }
     } catch (error) {
       console.error('Order error:', error);
+      const phone = branding?.phone || '089 244 189 180';
       toast({
         title: "Fehler bei der Bestellung",
-        description: "Bitte versuchen Sie es später erneut oder kontaktieren Sie uns telefonisch unter 089 244 189 180.",
+        description: `Bitte versuchen Sie es später erneut oder kontaktieren Sie uns telefonisch unter ${phone}.`,
         variant: "destructive"
       });
     } finally {

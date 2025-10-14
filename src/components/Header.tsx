@@ -6,11 +6,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import ClickToCall from './ClickToCall';
 import { scrollToCalculator, scrollToCalculatorFromOtherPage } from '../utils/scrollToCalculator';
+import { useBranding } from '@/contexts/BrandingContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const { branding } = useBranding();
 
   const handleOrderClick = () => {
     if (isHomePage) {
@@ -32,7 +34,7 @@ const Header = () => {
                 <ClickToCall variant="header" />
                 <div className="flex items-center space-x-2">
                   <Bell size={14} className="text-accent-orange-500" />
-                  <span>info@hill-heizoel.de</span>
+                  <span>{branding?.email || 'info@hill-heizoel.de'}</span>
                 </div>
               </div>
               <div className="text-accent-orange-500 font-medium">
@@ -45,8 +47,8 @@ const Header = () => {
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/a242d3e4-8d70-4fc0-8cab-947043c42574.png" 
-                alt="HILL-Heizöl" 
+                src={branding?.logoUrl || "/lovable-uploads/a242d3e4-8d70-4fc0-8cab-947043c42574.png"} 
+                alt={branding?.companyName || "HILL-Heizöl"} 
                 className="h-20"
               />
             </Link>
@@ -83,8 +85,8 @@ const Header = () => {
             
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/a242d3e4-8d70-4fc0-8cab-947043c42574.png" 
-                alt="HILL-Heizöl" 
+                src={branding?.logoUrl || "/lovable-uploads/a242d3e4-8d70-4fc0-8cab-947043c42574.png"} 
+                alt={branding?.companyName || "HILL-Heizöl"} 
                 className="h-18"
               />
             </Link>

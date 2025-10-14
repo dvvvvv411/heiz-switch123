@@ -3,8 +3,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Truck, CreditCard, AlertTriangle } from 'lucide-react';
+import { useBranding } from '@/contexts/BrandingContext';
 
 const AGB = () => {
+  const { branding } = useBranding();
+  
   return (
     <div className="min-h-screen">
       <Header />
@@ -14,7 +17,7 @@ const AGB = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Allgemeine Geschäftsbedingungen</h1>
             <p className="text-xl text-gray-600">
-              Gültig ab 01.01.2024 für HILL-Clear Projects GmbH
+              Gültig ab 01.01.2024 für {branding?.companyName || "HILL-Clear Projects GmbH"}
             </p>
           </div>
 
@@ -27,7 +30,7 @@ const AGB = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 text-sm leading-relaxed">
-                Diese Allgemeinen Geschäftsbedingungen gelten für alle Lieferungen und Leistungen der HILL-Clear Projects GmbH, Rottmannstr. 22a, 80333 München (nachfolgend "Verkäufer" genannt) an Verbraucher und Unternehmer (nachfolgend "Kunden" genannt). Abweichende Bedingungen des Kunden werden nicht anerkannt, es sei denn, der Verkäufer stimmt ihrer Geltung ausdrücklich schriftlich zu.
+                Diese Allgemeinen Geschäftsbedingungen gelten für alle Lieferungen und Leistungen der {branding?.companyName || "HILL-Clear Projects GmbH"}, {branding?.addressStreet || "Rottmannstr. 22a"}, {branding?.addressCity || "80333 München"} (nachfolgend "Verkäufer" genannt) an Verbraucher und Unternehmer (nachfolgend "Kunden" genannt). Abweichende Bedingungen des Kunden werden nicht anerkannt, es sei denn, der Verkäufer stimmt ihrer Geltung ausdrücklich schriftlich zu.
               </p>
             </CardContent>
           </Card>

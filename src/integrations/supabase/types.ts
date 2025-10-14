@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      brandings: {
+        Row: {
+          address_city: string
+          address_street: string
+          checkout_domain: string
+          company_name: string
+          company_short_name: string
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          logo_url: string
+          managing_director: string
+          name: string
+          phone: string
+          shop_id: string
+          updated_at: string
+        }
+        Insert: {
+          address_city: string
+          address_street: string
+          checkout_domain: string
+          company_name: string
+          company_short_name: string
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          logo_url: string
+          managing_director: string
+          name: string
+          phone: string
+          shop_id: string
+          updated_at?: string
+        }
+        Update: {
+          address_city?: string
+          address_street?: string
+          checkout_domain?: string
+          company_name?: string
+          company_short_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          logo_url?: string
+          managing_director?: string
+          name?: string
+          phone?: string
+          shop_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

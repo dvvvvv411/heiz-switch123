@@ -8,6 +8,8 @@ import { Loader2, LogOut } from 'lucide-react';
 import type { Session, User } from '@supabase/supabase-js';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { BrandingManager } from '@/components/dashboard/BrandingManager';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -94,19 +96,32 @@ const Dashboard = () => {
             </Button>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Willkommen im Admin-Dashboard</CardTitle>
-              <CardDescription>
-                Hier werden in Zukunft Admin-Funktionen angezeigt
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Das Dashboard ist noch leer. Admin-Funktionen können hier später hinzugefügt werden.
-              </p>
-            </CardContent>
-          </Card>
+          <Tabs defaultValue="overview" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="overview">Übersicht</TabsTrigger>
+              <TabsTrigger value="branding">Branding</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Willkommen im Admin-Dashboard</CardTitle>
+                  <CardDescription>
+                    Verwalten Sie Ihre Brandings und weitere Einstellungen
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Wählen Sie einen Tab oben aus, um zu den verschiedenen Verwaltungsbereichen zu navigieren.
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="branding" className="space-y-4">
+              <BrandingManager />
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       

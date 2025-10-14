@@ -2,8 +2,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Eye, Lock, Database } from 'lucide-react';
+import { useBranding } from '@/contexts/BrandingContext';
 
 const Datenschutz = () => {
+  const { branding } = useBranding();
+  
   return (
     <div className="min-h-screen">
       <Header />
@@ -26,13 +29,13 @@ const Datenschutz = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <p className="font-semibold">HILL-Clear Projects GmbH</p>
-                <p>Rottmannstr. 22a</p>
-                <p>80333 München</p>
+                <p className="font-semibold">{branding?.companyName || "HILL-Clear Projects GmbH"}</p>
+                <p>{branding?.addressStreet || "Rottmannstr. 22a"}</p>
+                <p>{branding?.addressCity || "80333 München"}</p>
                 <p>Deutschland</p>
                 <p className="mt-4">
-                  <span className="font-semibold">E-Mail:</span> info@hill-heizoel.de<br />
-                  <span className="font-semibold">Telefon:</span> 089 244 189 180
+                  <span className="font-semibold">E-Mail:</span> {branding?.email || "info@hill-heizoel.de"}<br />
+                  <span className="font-semibold">Telefon:</span> {branding?.phone || "089 244 189 180"}
                 </p>
               </div>
             </CardContent>
@@ -146,8 +149,8 @@ const Datenschutz = () => {
                 Bei Fragen zum Datenschutz oder zur Ausübung Ihrer Rechte kontaktieren Sie uns unter:
               </p>
               <div className="mt-3 space-y-1 text-gray-700 text-sm">
-                <p><span className="font-semibold">E-Mail:</span> info@hill-heizoel.de</p>
-                <p><span className="font-semibold">Telefon:</span> 089 244 189 180</p>
+                <p><span className="font-semibold">E-Mail:</span> {branding?.email || "info@hill-heizoel.de"}</p>
+                <p><span className="font-semibold">Telefon:</span> {branding?.phone || "089 244 189 180"}</p>
               </div>
             </CardContent>
           </Card>

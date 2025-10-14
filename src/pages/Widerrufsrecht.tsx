@@ -2,8 +2,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RotateCcw, Clock, FileText, AlertCircle } from 'lucide-react';
+import { useBranding } from '@/contexts/BrandingContext';
 
 const Widerrufsrecht = () => {
+  const { branding } = useBranding();
+  
   return (
     <div className="min-h-screen">
       <Header />
@@ -43,15 +46,15 @@ const Widerrufsrecht = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-700 text-sm leading-relaxed">
-                Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (HILL-Clear Projects GmbH, Rottmannstr. 22a, 80333 München, E-Mail: info@hill-heizoel.de, Tel.: 089 244 189 180) mittels einer eindeutigen Erklärung (z.B. ein mit der Post versandter Brief, Telefax oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
+                Um Ihr Widerrufsrecht auszuüben, müssen Sie uns ({branding?.companyName || "HILL-Clear Projects GmbH"}, {branding?.addressStreet || "Rottmannstr. 22a"}, {branding?.addressCity || "80333 München"}, E-Mail: {branding?.email || "info@hill-heizoel.de"}, Tel.: {branding?.phone || "089 244 189 180"}) mittels einer eindeutigen Erklärung (z.B. ein mit der Post versandter Brief, Telefax oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.
               </p>
               
               <div className="bg-primary-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-gray-900 mb-2">Kontakt für Widerruf:</h3>
                 <div className="space-y-1 text-gray-700 text-sm">
-                  <p><span className="font-semibold">Adresse:</span> HILL-Clear Projects GmbH, Rottmannstr. 22a, 80333 München</p>
-                  <p><span className="font-semibold">E-Mail:</span> info@hill-heizoel.de</p>
-                  <p><span className="font-semibold">Telefon:</span> 089 244 189 180</p>
+                  <p><span className="font-semibold">Adresse:</span> {branding?.companyName || "HILL-Clear Projects GmbH"}, {branding?.addressStreet || "Rottmannstr. 22a"}, {branding?.addressCity || "80333 München"}</p>
+                  <p><span className="font-semibold">E-Mail:</span> {branding?.email || "info@hill-heizoel.de"}</p>
+                  <p><span className="font-semibold">Telefon:</span> {branding?.phone || "089 244 189 180"}</p>
                 </div>
               </div>
 
@@ -126,7 +129,7 @@ const Widerrufsrecht = () => {
                 </p>
                 
                 <div className="space-y-4 text-gray-700 text-sm">
-                  <p>An: HILL-Clear Projects GmbH, Rottmannstr. 22a, 80333 München, E-Mail: info@hill-heizoel.de</p>
+                  <p>An: {branding?.companyName || "HILL-Clear Projects GmbH"}, {branding?.addressStreet || "Rottmannstr. 22a"}, {branding?.addressCity || "80333 München"}, E-Mail: {branding?.email || "info@hill-heizoel.de"}</p>
                   
                   <p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*):</p>
                   

@@ -2,8 +2,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Building, Phone, Mail, MapPin } from 'lucide-react';
+import { useBranding } from '@/contexts/BrandingContext';
 
 const Impressum = () => {
+  const { branding } = useBranding();
+  
   return (
     <div className="min-h-screen">
       <Header />
@@ -28,7 +31,7 @@ const Impressum = () => {
               <CardContent className="space-y-3">
                 <div>
                   <h3 className="font-semibold text-gray-900">Firma:</h3>
-                  <p className="text-gray-700">HILL-Clear Projects GmbH</p>
+                  <p className="text-gray-700">{branding?.companyName || "HILL-Clear Projects GmbH"}</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Rechtsform:</h3>
@@ -62,9 +65,9 @@ const Impressum = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900">Anschrift:</h3>
                     <p className="text-gray-700">
-                      HILL-Clear Projects GmbH<br />
-                      Rottmannstr. 22a<br />
-                      80333 München<br />
+                      {branding?.companyName || "HILL-Clear Projects GmbH"}<br />
+                      {branding?.addressStreet || "Rottmannstr. 22a"}<br />
+                      {branding?.addressCity || "80333 München"}<br />
                       Deutschland
                     </p>
                   </div>
@@ -74,7 +77,7 @@ const Impressum = () => {
                   <Phone className="text-primary-600" size={20} />
                   <div>
                     <h3 className="font-semibold text-gray-900">Telefon:</h3>
-                    <p className="text-gray-700">089 244 189 180</p>
+                    <p className="text-gray-700">{branding?.phone || "089 244 189 180"}</p>
                   </div>
                 </div>
                 
@@ -82,7 +85,7 @@ const Impressum = () => {
                   <Mail className="text-primary-600" size={20} />
                   <div>
                     <h3 className="font-semibold text-gray-900">E-Mail:</h3>
-                    <p className="text-gray-700">info@hill-heizoel.de</p>
+                    <p className="text-gray-700">{branding?.email || "info@hill-heizoel.de"}</p>
                   </div>
                 </div>
               </CardContent>
@@ -94,7 +97,7 @@ const Impressum = () => {
               <CardTitle>Geschäftsführung</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700">Michael Hillmann</p>
+              <p className="text-gray-700">{branding?.managingDirector || "Michael Hillmann"}</p>
             </CardContent>
           </Card>
 
